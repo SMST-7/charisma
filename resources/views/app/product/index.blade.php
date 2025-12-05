@@ -28,33 +28,6 @@
 </form>
 
 
-
-
-
-<!-- <form
-    class="bb-btn-group-form flex relative max-[991px]:ml-[20px] max-[767px]:m-[0]"
-    id="searchForm" action="{{ route('offer.index') }}">
-
-    <input
-        class="form-control bb-search-bar bg-[#fff] block w-full min-h-[45px] h-[48px] py-[10px] pr-[10px] pl-[15px]
-        max-[991px]:min-h-[40px] max-[991px]:h-[40px] max-[991px]:p-[10px]
-        text-[14px] font-normal leading-[1] text-[#777]
-        rounded-[10px] border-[1px] border-solid border-[#eee] text-right direction-rtl"        
-        id="searchInput"
-        placeholder="جستجوی نام محصول..."
-        name="search"
-        value="{{ request('search') }}"
-    >
-
-    <button
-        class="submit absolute top-[0] right-[0] flex items-center justify-center w-[45px] h-full
-        bg-transparent text-[#555] text-[16px] rounded-[0] outline-[0] border-[0]"
-        type="submit">
-        <i class="ri-search-line text-[18px] leading-[12px] text-[#555]"></i>
-    </button>
-
-</form> -->
-
 @endsection
 
 @section('content')
