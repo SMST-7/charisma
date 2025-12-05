@@ -1,0 +1,41 @@
+/*#slider{*/
+/*    width: 20%;*/
+/*    height: 40px;*/
+/*    position: relative;*/
+/*}*/
+
+#slider {
+    width: 100%; /* عرض را افزایش دادیم تا پاسخ‌گو باشد */
+    max-width: 300px; /* حداکثر عرض */
+    height: auto;
+    position: relative;
+    margin: 0 auto;
+}
+
+.slide{
+    display: none;
+}
+
+.active{
+    display: block;
+}
+
+.prev, .next {
+    font-size: 30px;
+    text-decoration: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 700;
+    color: #000;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
