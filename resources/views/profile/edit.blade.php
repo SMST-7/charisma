@@ -3,17 +3,12 @@
 @section('title', 'پروفایل کاربری')
 
 @section('top_page')
+    <!-- پیام فلش -->
     @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
+        <div class="alert alert-success  p-[12px]" id="success-alert">{{ session('success') }}</div>
     @endif
     @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
+        <div class="alert alert-danger  p-[12px]" id="error-alert">{{ session('error') }}</div>
     @endif
 
     <x-top-page title="پروفایل کاربری" :items="['فروشگاه','پروفایل']" homeUrl="/" />
@@ -155,16 +150,81 @@
         });
     </script>
 
+
+
+
+
+    <script>
+        // مخفی کردن پیام‌های موفقیت و خطا پس از 3 ثانیه
+        document.addEventListener('DOMContentLoaded', function () {
+            const successAlert = document.getElementById('success-alert');
+            const errorAlert = document.getElementById('error-alert');
+
+            if (successAlert) {
+                setTimeout(() => {
+                    successAlert.classList.add('fade-out');
+                    setTimeout(() => {
+                        successAlert.style.display = 'none';
+                    }, 500); // مدت زمان انیمیشن محو شدن
+                    successAlert.style.display = 'none';
+                }, 3000);
+            }
+
+            if (errorAlert) {
+                setTimeout(() => {
+                    errorAlert.classList.add('fade-out');
+                    setTimeout(() => {
+                        errorAlert.style.display = 'none';
+                    }, 500); // مدت زمان انیمیشن محو شدن
+                }, 3500); // 500 میلی‌ثانیه قبل از پایان 3 ثانیه
+            }
+        });
+    </script>
+
+
     <style>
-        .bg-gradient-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* استایل‌های بهبود یافته برای پیام‌های هشدار */
+        .alert {
+            padding: 15px 14px;
+            margin: 20px 25px;
+            border-radius: 12px;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.5s ease-in-out;
+            max-width: 40%; /* کاهش عرض پیام‌ها */
+            width: 40%;
         }
-        .toggle-password {
-            cursor: pointer;
+
+        .alert-success {
+            background-color: #e6f4ea;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
         }
-        .alert-warning {
-            background: linear-gradient(90deg, #fff8e1, #fff3e0);
-            border-left: 5px solid #ffb300;
+
+        .alert-danger {
+            background-color: #fce4e4;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
         }
+
+        /* انیمیشن محو شدن */
+        .alert.fade-out {
+            opacity: 0;
+        }
+
+
+        /* ریسپانسیو کردن جدول برای صفحه‌نمایش‌های کوچک */
+        @media screen and (max-width: 767px) {
+            /* تنظیم پیام‌ها در موبایل */
+            .alert {
+                font-size: 14px;
+                padding: 12px 18px;
+            }
+        }
+
     </style>
 @endsection

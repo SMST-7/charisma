@@ -20,7 +20,6 @@ class ProductController extends Controller
     {
         // 10 محصول در هر صفحه + eager load دسته‌بندی
         $products = Product::with('category', 'images', 'attributeValues.attribute')->orderBy('created_at', 'desc')->paginate(10);
-//        $coupons=Coupon::where('active',1)->get();
 
         return view('panel.product.index', compact('products'));
     }
@@ -54,7 +53,7 @@ class ProductController extends Controller
         $data = $validated;
 
 
-        $destinationPath = public_path('panel/pictures/');
+        $destinationPath = base_path('public/panel/pictures/');
 
         // ذخیره تصویر توضیحات (image_description)
         if ($request->hasFile('image_description')) {
@@ -122,7 +121,10 @@ class ProductController extends Controller
 
         $data = $request->only(['name', 'description', 'price', 'stock', 'cat_id']);
 
-        $destinationPath = public_path('panel/pictures/');
+//        $destinationPath = public_path('panel/pictures/');
+
+        $destinationPath = base_path('public/panel/pictures/');
+
 
         // 1. مدیریت تصویر توضیحات (فیلد name="image")
         if ($request->hasFile('image')) {
@@ -147,12 +149,21 @@ class ProductController extends Controller
         // 2. مدیریت تصاویر گالری
         if ($request->filled('remove_images')) {
             foreach ($product->images as $image) {
-                if (File::exists(public_path($image->image_path))) {
-                    File::delete(public_path($image->image_path));
+                if (File::exists(base_path('public/'.$image->image_path))) {
+                    File::delete(base_path('public/'.$image->image_path));
                 }
             }
             $product->images()->delete();
         }
+
+//        if ($request->filled('remove_images')) {
+//            foreach ($product->images as $image) {
+//                if (File::exists(public_path($image->image_path))) {
+//                    File::delete(public_path($image->image_path));
+//                }
+//            }
+//            $product->images()->delete();
+//        }
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
@@ -189,7 +200,7 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
-        $destinationPath = public_path('panel/pictures/');
+        $destinationPath = base_path('public/panel/pictures/');
 
         // حذف تصویر توضیحات (image_description)
         if ($product->image_description && File::exists($destinationPath . $product->image_description)) {
@@ -198,8 +209,8 @@ class ProductController extends Controller
 
         // حذف تصاویر محصول از جدول product_images و پوشه
         foreach ($product->images as $image) {
-            if (File::exists(public_path($image->image_path))) {
-                File::delete(public_path($image->image_path));
+            if (File::exists(base_path('public/'.$image->image_path))) {
+                File::delete(base_path('public/'.$image->image_path));
             }
         }
         $product->images()->delete(); // حذف رکوردهای تصاویر از دیتابیس

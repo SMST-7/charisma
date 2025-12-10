@@ -58,13 +58,13 @@ class SettingController extends Controller
 
         if ($request->hasFile('logo')) {
             $logoName = time() . '_logo.' . $request->logo->extension();
-            $request->logo->move(public_path('uploads'), $logoName);
+            $request->logo->move(base_path('public/uploads'), $logoName);
             $setting->logo = 'uploads/' . $logoName;
         }
 
         if ($request->hasFile('favicon')) {
             $faviconName = time() . '_favicon.' . $request->favicon->extension();
-            $request->favicon->move(public_path('uploads'), $faviconName);
+            $request->favicon->move(base_path('public/uploads'), $faviconName);
             $setting->favicon = 'uploads/' . $faviconName;
         }
 

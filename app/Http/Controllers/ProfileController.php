@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\ActivityLog;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,18 +16,7 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
 
-    /**
-     * Display the user's profile form.
-     */
-//    public function edit(Request $request): View
-//    {
-////        $users = Auth::user()->isAdmin() ? User::all() : collect();
-//        $user=User::where('status',1)->first();
-//        return view('profile.edit', [
-////            'user' => $request->user(),
-//            'user' => $user,
-//        ]);
-//    }
+
 
     public function edit(Request $request): View
     {
@@ -37,9 +27,8 @@ class ProfileController extends Controller
             'users' => $users,
         ]);
     }
-    /**
-     * Update the user's profile information.
-     */
+
+
     public function update(Request $request, string $id): RedirectResponse
     {
         $user = User::findOrFail($id);
@@ -73,57 +62,13 @@ class ProfileController extends Controller
             // Update user
             $user->update($updateData);
 
+            ActivityLog::record('ویرایش', 'پروفایل', $user->id, 'Updated user titled: ' . $user->title);
+
             return Redirect::route('profile.edit')->with('success', 'پروفایل با موفقیت به‌روزرسانی شد.');
         }
 
         return Redirect::route('profile.edit')->withErrors(['error' => 'کاربر یافت نشد یا غیرفعال است.']);
     }
-
-
-
-//    public function update(Request $request,string $id): RedirectResponse
-//    {
-//
-//        $user=User::findorFail($id);
-//        if ($user && $user->status==1) {
-//            $request->validate([
-//                'name'=>['nullable','string'],
-//                'username'=>['nullable','string'],
-//                'current_password'=>['required', 'string'],
-//                'password'=>['nullable', 'string','min:8','confirmed'],
-//            ]);
-//            if ($user->password==$request->current_password){
-//                $user->update([
-//                    'name' => $request->name,
-//                    'username' => $request->username,
-//
-//                ]);
-//            }
-//
-//
-//
-//        }
-//        return Redirect::route('profile.edit')->with('status', 'وضعیت کاربر به‌روزرسانی شد.');
-//        // به‌روزرسانی پروفایل کاربر فعلی
-//
-////        $validated = $request->validate([
-////            'name' => ['required', 'string', 'max:255'],
-////            'username' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9_]+$/'],
-//////            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-////        ]);
-//
-////        $updateRequest = app(ProfileUpdateRequest::class);
-////        $updateRequest->merge($request->all());
-////        $validated = $updateRequest->validate([
-////            'name' => ['required', 'string', 'max:255'],
-////            'username' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9_]+$/', Rule::unique('users')->ignore($request->user()->id)],
-////        ]);
-////
-////        $user = $request->user();
-////        $user->fill($validated);
-////        $user->save();
-////        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-//    }
 
 
 
@@ -143,59 +88,6 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('success', 'وضعیت کاربر به‌روزرسانی شد.');
     }
-
-//    public function update(ProfileUpdateRequest $request): RedirectResponse
-//    {
-//
-//        $validated = $request->validated();
-//
-//        // اگر رمز عبور وارد شده، آن را هش کنیم
-//        if (!empty($validated['password'])) {
-//            $validated['password'] = Hash::make($validated['password']);
-//        } else {
-//            unset($validated['password']); // رمز را از آپدیت حذف کنیم
-//        }
-//
-//        $request->user()->fill($validated);
-//        $request->user()->save();
-//
-//        return Redirect::route('profile.edit')->with('update', 'پروفایل با موفقیت به‌روزرسانی شد.');
-//    }
-
-    /**
-     * Delete the user's account.
-     */
-//    public function destroy(Request $request): RedirectResponse
-//    {
-//        $request->validateWithBag('userDeletion', [
-//            'password' => ['required', 'current_password'],
-//        ]);
-//
-//        $user = $request->user();
-//
-//        Auth::logout();
-//
-//        $user->delete();
-//
-//        $request->session()->invalidate();
-//        $request->session()->regenerateToken();
-//
-//        return Redirect::to('/');
-//    }
-
-//    public function changeStatus(Request $request, User $user) : RedirectResponse
-//    {
-//        if ($user && Auth::user()->isAdmin()) {
-//            $request->validate([
-//                'status' => ['required', 'in:-1,0,1'],
-//            ]);
-//
-//            $user->update([
-//                'status' => $request->status,
-//            ]);
-//            return Redirect::route('profile.edit')->with('success', 'وضعیت کاربر به‌روزرسانی شد.');
-//        }
-//    }
 
 
     public function deleteUser(User $user): RedirectResponse

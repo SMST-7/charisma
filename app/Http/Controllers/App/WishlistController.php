@@ -34,15 +34,9 @@ class WishlistController extends Controller
         $this->middleware('auth'); // اطمینان از لاگین بودن کاربر
     }
 
-//    public function __construct()
-//    {
-//        $this->middleware('auth')->except(['somePublicMethod']);
-//    }
     public function index()
     {
-//        if (!Auth::check()) {
-//            return redirect()->route('login');
-//        }
+
         $wishlists = Auth::user()->wishlists()->with(['products.images', 'products.attributeValues.attribute'])->get();//        فقط wishlistهای کاربر فعلی (کسی که لاگین کرده) رو لود می‌کنه.
         return view('app.wishlist.index', compact('wishlists'));
     }
@@ -83,13 +77,9 @@ class WishlistController extends Controller
         }
         return redirect()->back()->with('error','نا موفق');
 
-//        return response()->json(['message' => 'محصول در لیست علاقه‌مندی‌ها یافت نشد'], 404);
     }
 
-    public function create()
-    {
-        //
-    }
+
 
     private function middleware(string $string)
     {

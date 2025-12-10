@@ -4,16 +4,13 @@
 @section('top_page')
 
 
-        <!-- نمایش پیام‌های فلش -->
-        @if (session('insert') || session('update') || session('delete') || session('error'))
-            <div class="alert alert-dismissible fade show my-3" role="alert"
-                 style="{{ session('error') ? 'background-color: #f8d7da; color: #721c24; border-color: #f5c6cb;' : 'background-color: #d4edda; color: #155724; border-color: #c3e6cb;' }}">
-                <strong>
-                    {{ session('insert') ?? session('update') ?? session('delete') ?? session('error') }}
-                </strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
-            </div>
-        @endif
+    <!-- پیام فلش -->
+    @if (session('success'))
+        <div class="alert alert-success  p-[12px]" id="success-alert">{{ session('success') }}</div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger  p-[12px]" id="error-alert">{{ session('error') }}</div>
+    @endif
     <x-top-page title="ویرایش درباره ما" :items="['پنل مدیریت','درباره ما']" homeUrl="/" />
 @endsection
 
@@ -146,4 +143,80 @@
             }
         });
     </script>
+
+
+
+    <script>
+        // مخفی کردن پیام‌های موفقیت و خطا پس از 3 ثانیه
+        document.addEventListener('DOMContentLoaded', function () {
+            const successAlert = document.getElementById('success-alert');
+            const errorAlert = document.getElementById('error-alert');
+
+            if (successAlert) {
+                setTimeout(() => {
+                    successAlert.classList.add('fade-out');
+                    setTimeout(() => {
+                        successAlert.style.display = 'none';
+                    }, 500); // مدت زمان انیمیشن محو شدن
+                    successAlert.style.display = 'none';
+                }, 3000);
+            }
+
+            if (errorAlert) {
+                setTimeout(() => {
+                    errorAlert.classList.add('fade-out');
+                    setTimeout(() => {
+                        errorAlert.style.display = 'none';
+                    }, 500); // مدت زمان انیمیشن محو شدن
+                }, 3500); // 500 میلی‌ثانیه قبل از پایان 3 ثانیه
+            }
+        });
+    </script>
+
+
+    <style>
+        /* استایل‌های بهبود یافته برای پیام‌های هشدار */
+        .alert {
+            padding: 15px 14px;
+            margin: 20px 25px;
+            border-radius: 12px;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.5s ease-in-out;
+            max-width: 40%; /* کاهش عرض پیام‌ها */
+            width: 40%;
+        }
+
+        .alert-success {
+            background-color: #e6f4ea;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .alert-danger {
+            background-color: #fce4e4;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        /* انیمیشن محو شدن */
+        .alert.fade-out {
+            opacity: 0;
+        }
+
+
+        /* ریسپانسیو کردن جدول برای صفحه‌نمایش‌های کوچک */
+        @media screen and (max-width: 767px) {
+            /* تنظیم پیام‌ها در موبایل */
+            .alert {
+                font-size: 14px;
+                padding: 12px 18px;
+            }
+        }
+
+    </style>
 @endsection

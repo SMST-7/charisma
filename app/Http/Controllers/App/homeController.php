@@ -59,10 +59,6 @@ class homeController extends Controller
     }
 
 
-
-
-
-
     public function getProducts(Request $request)
     {
         $slug = $request->query('category');
@@ -87,20 +83,7 @@ class homeController extends Controller
     }
 
 
-    public function create()
-    {
-        //
-    }
 
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show($slug)
     {
         $category = Category::with('products')->where('slug', $slug)
@@ -122,27 +105,4 @@ class homeController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

@@ -10,26 +10,20 @@ use Illuminate\Support\Facades\File;
 
 class BannerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $banners=Banner::all();
         return view('panel.banner.index',compact('banners'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         return view('panel.banner.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -40,7 +34,7 @@ class BannerController extends Controller
 
         $data=$request->all();
 
-        $destinationPath=public_path('panel/banner/');
+        $destinationPath=base_path('public/panel/banner/');
 
         if ($request->hasFile('image')) {
             $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
@@ -55,26 +49,19 @@ class BannerController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
         $banner=Banner::findorFail($id);
         return view('panel.banner.edit',compact('banner'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         $banner=Banner::findorFail($id);
@@ -87,7 +74,7 @@ class BannerController extends Controller
 
         $data=$request->all();
 
-        $destinationPath = public_path('panel/banner/');
+        $destinationPath = base_path('public/panel/banner/');
 
 
         // به‌روزرسانی تصویر
@@ -116,13 +103,11 @@ class BannerController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
         $banner = banner::findOrFail($id);
-        $destinationPath = public_path('panel/banner/');
+        $destinationPath = base_path('public/panel/banner/');
 
         // حذف تصویر  (image)
         if ($banner->image && File::exists($destinationPath . $banner->image)) {

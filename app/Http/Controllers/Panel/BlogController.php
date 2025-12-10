@@ -44,7 +44,7 @@ class BlogController extends Controller
 
         // ذخیره تصویر مستقیم در public/uploads/blogs
         if ($request->hasFile('image')) {
-            $destinationPath = public_path('uploads/blogs/');
+            $destinationPath = base_path('public/uploads/blogs/');
             $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
             $request->file('image')->move($destinationPath, $fileName);
             $data['image'] = $fileName;
@@ -94,19 +94,19 @@ class BlogController extends Controller
         // مدیریت تصویر
         if ($request->hasFile('image')) {
             // حذف تصویر قبلی
-            if ($blog->image && File::exists(public_path('uploads/blogs/' . $blog->image))) {
-                File::delete(public_path('uploads/blogs/' . $blog->image));
+            if ($blog->image && File::exists(base_path('public/uploads/blogs/' . $blog->image))) {
+                File::delete(base_path('public/uploads/blogs/' . $blog->image));
             }
 
             $file = $request->file('image');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/blogs'), $fileName);
+            $file->move(base_path('public/uploads/blogs'), $fileName);
             $data['image'] = $fileName;
 
         } elseif ($request->has('remove_image') && $request->remove_image) {
             // حذف تصویر اگر تیک "حذف تصویر" خورده باشه
-            if ($blog->image && File::exists(public_path('uploads/blogs/' . $blog->image))) {
-                File::delete(public_path('uploads/blogs/' . $blog->image));
+            if ($blog->image && File::exists(base_path('public/uploads/blogs/' . $blog->image))) {
+                File::delete(base_path('public/uploads/blogs/' . $blog->image));
             }
             $data['image'] = null;
 
@@ -127,8 +127,8 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
 
-        if ($blog->image && File::exists(public_path('uploads/blogs/' . $blog->image))) {
-            File::delete(public_path('uploads/blogs/' . $blog->image));
+        if ($blog->image && File::exists(base_path('public/uploads/blogs/' . $blog->image))) {
+            File::delete(base_path('public/uploads/blogs/' . $blog->image));
         }
 
         $blog->delete();

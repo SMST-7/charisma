@@ -53,8 +53,8 @@ class ContactusController extends Controller
 
     public function show(string $id)
     {
-   $message = Contactus::findOrFail($id);
-return view('panel.contactus.show', compact('message'));
+        $message = Contactus::findOrFail($id);
+        return view('panel.contactus.show', compact('message'));
     }
 
 

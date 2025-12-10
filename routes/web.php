@@ -159,7 +159,7 @@ Route::middleware(['auth',AdminMiddleware::class])->prefix('admin')->group(funct
     Route::put('about', [AboutusController::class, 'update'])->name('about.update');
 
     // contact us
-    Route::resource('contactus', ContactusController::class)->only(['index']);
+    Route::resource('contactus', ContactusController::class)->only(['index','show']);
     Route::post('contactus/{id}/toggle-status', [ContactusController::class, 'toggleStatus'])
         ->name('contactus.toggleStatus');
 

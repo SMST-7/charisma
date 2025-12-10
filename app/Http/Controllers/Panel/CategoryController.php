@@ -41,7 +41,7 @@ class CategoryController extends Controller
         $filePath = null;
         if ($request->hasFile('image')) {
             $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('panel/pictures'), $fileName);
+            $request->file('image')->move(base_path('public/panel/pictures'), $fileName);
             $filePath = $fileName;
         }
 
@@ -87,16 +87,16 @@ class CategoryController extends Controller
         // پردازش تصویر
         if ($request->hasFile('image')) {
             // حذف تصویر قدیمی اگر وجود داشته باشد
-            if ($category->image && File::exists(public_path('panel/pictures/' . $category->image))) {
-                File::delete(public_path('panel/pictures/' . $category->image));
+            if ($category->image && File::exists(base_path('public/panel/pictures/' . $category->image))) {
+                File::delete(base_path('public/panel/pictures/' . $category->image));
             }
             $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('panel/pictures/'), $fileName);
+            $request->file('image')->move(base_path('public/panel/pictures/'), $fileName);
             $filePath = $fileName;
         } elseif ($request->filled('remove_image') && $category->image) {
             // حذف تصویر و تنظیم مقدار null
-            if (File::exists(public_path('panel/pictures/' . $category->image))) {
-                File::delete(public_path('panel/pictures/' . $category->image));
+            if (File::exists(base_path('public/panel/pictures/' . $category->image))) {
+                File::delete(base_path('public/panel/pictures/' . $category->image));
             }
             $filePath = null;
         }
@@ -123,8 +123,8 @@ class CategoryController extends Controller
         }
 
         // حذف تصویر اگر وجود داشته باشد
-        if ($category->image && File::exists(public_path('panel/pictures/' . $category->image))) {
-            File::delete(public_path('panel/pictures/' . $category->image));
+        if ($category->image && File::exists(base_path('public/panel/pictures/' . $category->image))) {
+            File::delete(base_path('public/panel/pictures/' . $category->image));
         }
 
         // ثبت لاگ برای حذف دسته‌بندی

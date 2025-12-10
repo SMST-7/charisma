@@ -33,7 +33,7 @@ class ServiceController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $data=$request->all();
-        $destinationPath = public_path('panel/pictures/');
+        $destinationPath = base_path('public/panel/pictures/');
 
         $filePath = null;
         if ($request->hasFile('image')) {
@@ -78,7 +78,7 @@ class ServiceController extends Controller
         ]);
 
         $data = $request->all();
-        $destinationPath = public_path('panel/pictures/');
+        $destinationPath = base_path('public/panel/pictures/');
 
         // به‌روزرسانی تصویر توضیحات
         if ($request->hasFile('image')) {
@@ -106,8 +106,8 @@ class ServiceController extends Controller
     {
         $service=Service::findorFail($id);
         // حذف تصویر اگر وجود داشته باشد
-        if ($service->image && File::exists(public_path('panel/pictures/' . $service->image))) {
-            File::delete(public_path('panel/pictures/' . $service->image));
+        if ($service->image && File::exists(base_path('public/panel/pictures/' . $service->image))) {
+            File::delete(base_path('public/panel/pictures/' . $service->image));
         }
 
         $service->delete();

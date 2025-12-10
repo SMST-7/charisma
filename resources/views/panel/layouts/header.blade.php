@@ -185,7 +185,8 @@
                                                     </a>
                                                 </h5>
                                                 <p>{{ $log->description }}</p>
-                                                <span>{{ $log->created_at->format('H:i') }}</span>
+                                                <br>
+                                                <span>{{ $log->created_at->format('H:i:s') }}</span>
                                             </div>
                                             <div class="notification-right"><a href="#"><i data-feather="x"></i></a></div>
                                         </div>

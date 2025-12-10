@@ -28,7 +28,6 @@ class UserAuthController extends Controller
         ]);
 
         $credentials = $request->only('username', 'password');
-//        \Log::info('User login attempt:', $credentials);
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
 
@@ -41,10 +40,6 @@ class UserAuthController extends Controller
         }
         return redirect()->route('user.register')->with('error','شما ثبت نام نکردین!!!!!!');
 
-//        \Log::error('User login failed for username: ' . $request->username);
-//        return back()->withErrors([
-//            'username' => trans('user.auth.register'),
-//        ])->onlyInput('username');
     }
 
     // نمایش فرم ثبت‌نام

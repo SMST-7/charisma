@@ -7,44 +7,16 @@ use App\Http\Controllers\Controller;
 
 class AboutusController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-                $about = Aboutus::firstOrFail();
+        $about = Aboutus::firstOrFail();
 
         return view('app.aboutus', compact('about'));
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit()
     {
 
@@ -53,9 +25,7 @@ class AboutusController extends Controller
         return view('panel.aboutus.edit', compact('about'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request)
     {
         $validated = $request->validate([
@@ -83,13 +53,6 @@ class AboutusController extends Controller
             $about->save();
         }
 
-        return redirect()->back()->with('update' , "ویرایش با موفقیت انجام شد");    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->back()->with('update' , "ویرایش با موفقیت انجام شد");
     }
 }
